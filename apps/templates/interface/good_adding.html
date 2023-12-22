@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Create new good{% endblock %}
+
+{% block content %}
+    <h1>Create new good</h1>
+    <p>Please, add your good: </p>
+    <form action="." method="post">
+        {{ good_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Create new good"></p>
+    </form>
+{% endblock %}
+

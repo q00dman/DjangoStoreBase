@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Вхід{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container is-half-width is-justify-content-center">
+        <div class="box is-vcentered is-4" style="margin-top:10pt">
+                <div class="block">
+                    <h1 class="title is-1">Вхід</h1>
+                    {% if form.errors %}
+                        <p class="subtitle is-4 has-text-danger">
+                            Неправильний логін або пароль. <br>Перевірте правильність вводу.
+                        </p>
+                    {% else %}
+                        <p class="subtitle is-4">Введіть логін і пароль для входу<br>до особистого кабінету:</p>
+                    {% endif %}
+                </div>
+                <div class="login-form is-centered">
+                    
+                        <form action="{% url 'login' %}" method="post">
+                            <div class="form-group block">
+                                <input type="text"
+                                    class="input is-medium"
+                                    placeholder="Логін"
+                                    name="{{ form.username.name }}"
+                                    id="{{ form.username.id_for_label }}"
+                                    {% if form.username.value != None %}value="{{ form.username.value|stringformat:'s' }}"{% endif %}
+                                    maxlength="{{ form.username.field.max_length }}"
+                                    {% if form.username.field.required %}required{% endif %}>
+                            </div>
+                            <div class="form-group block">
+                                
+                                <input type="password"
+                                    class="input is-medium"
+                                    placeholder="Пароль"
+                                    name="{{ form.password.name }}"
+                                    id="{{ form.password.id_for_label }}"
+                                    {% if form.password.value != None %}value="{{ form.password.value|stringformat:'s' }}"{% endif %}
+                                    maxlength="{{ form.password.field.max_length }}"
+                                    {% if form.password.field.required %}required{% endif %}>
+                            </div>
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                            <p><input type="submit" class='button is-primary' value="Увійти">
+                                <a class="button is-light" href="{% url 'register' %}">
+                                Зареєструватись
+                                </a>
+                            </p>
+                        </form>
+
+                </div>
+            </div>
+        </div>
+</section>
+{% endblock %}

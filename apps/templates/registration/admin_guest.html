@@ -1,0 +1,5 @@
+{% extends 'users/base.html' %}
+
+{% block of content %}
+    <h4>Admin, {{user,name|default: 'guest'}}!</h4>
+{% endblock of content %}

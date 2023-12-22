@@ -1,0 +1,7 @@
+{% extends "dashboard.html" %}
+
+{% block dashboard_content %}
+<p class='title is-3 has-text-primary'> {{request.user.first_name}} {{request.user.last_name}}</p>
+<p class='subtitle is-4'> Username: {{request.user.username}}</p>
+<p class='subtitle is-4'> Email: {{request.user.email}}</p>
+{% endblock %}

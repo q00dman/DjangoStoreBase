@@ -1,0 +1,83 @@
+{% extends "dashboard.html" %}
+{% load static %}
+{% block dashboard_content %}
+<div class='columns multiline'>
+    <div class='column is-one-third'>
+        <figure class='image'>
+            <img src={% static good.address %}>
+        </figure>
+    </div>
+
+    <div class="order-form column is-fullwidth">
+                        {%if form.errors %}
+                        <p class='subtitle is-4 is-danger'> Помилка при замовленні! Повідомте про неї за допомогою форми зворотнього зв'язку. </p>
+                        {% endif %}
+        <form action="{{good.id}}" method="post">
+
+            
+            <div class="form-group block">
+                <div class="select is-medium is-fullwidth">
+                <select name="good" required id="id_good" disabled>
+                  
+                    <option value="{{good.id}}" selected>{{good.title}}</option>
+                  
+                  </select>
+                </div>
+                    
+
+            </div>
+<!--
+            <div class="form-group block">
+                
+                <input type="text"
+                    class="input is-medium"
+                    placeholder="No good"
+                    name="{{ form.good.name }}"
+                    id="{{ form.good.id_for_label }}"
+                    {% if good.id != None %}value="{{ good.id }}"{% endif %}
+                    maxlength="{{ form.good.field.max_length }}"
+                    {% if form.good.field.required %}required{% endif %}
+                    disabled>
+            </div>
+            -->
+            <div class="form-group block">
+                
+                <input type="text"
+                    class="input is-medium"
+                    placeholder="Адреса"
+                    name="{{ form.address.name }}"
+                    id="{{ form.address.id_for_label }}"
+                    {% if form.address.value != None %}value="{{ form.address.value|stringformat:'s' }}"{% endif %}
+                    maxlength="{{ form.address.field.max_length }}"
+                    {% if form.address.field.required %}required{% endif %}>
+            </div>
+            
+            <div class="form-group block">
+                
+                <input type="text"
+                    class="input is-medium"
+                    placeholder="+380501234567"
+                    name="{{ form.phone_number.name }}"
+                    id="{{ form.phone_number.id_for_label }}"
+                    {% if form.phone_number.value != None %}value="{{ form.phone_number.value|stringformat:'s' }}"{% endif %}
+                    maxlength="{{ form.phone_number.field.max_length }}"
+                    {% if form.phone_number.field.required %}required{% endif %}>
+            </div>
+
+            <div class="form-group block">
+                <select name="buyer" required id="id_buyer" style="visibility:hidden" disabled>
+                  
+                    <option value="{{request.user.id}}" selected>who knows</option>
+                  
+                  </select>
+                    
+
+            </div>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <p><input type="submit" class='button is-primary' value="Замовити" data-target="modal-success">
+            </p>
+        </form>
+    </div>
+{% endblock %}
+

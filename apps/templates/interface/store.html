@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Магазин зображень{% endblock %}
+
+{% block content %}
+    <section class="container">
+      <div class="block hero is-warning">
+        <div class='hero-body'>
+          <div class="box">
+            <p class="subtitle is-4 block">За жанром</p>
+            <span class="tags block are-primary are-medium">
+              {% for genre in genre_list %}
+              <a class='tag is-primary' href="/genre/{{genre.genre}}">{{genre.genre}}</a>
+              {% endfor %}
+            </span>
+          </div>
+          <div class="box">
+            <p class="subtitle is-4 block">За технікою</p>
+            <span class="tags block are-primary are-medium">
+              {% for technique in technique_list %}
+              <a class='tag is-primary' href="/technique/{{technique.technique}}">{{technique.technique}}</a>
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="block columns is-multiline">
+{% for picture in picture_list %}
+        <div class="column is-one-third">
+          <div class="card is-shady">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src={% static picture|lookup:'address' %} alt="Placeholder image" class="modal-button" data-target={{ picture|lookup:"extra_id" }} style="object-fit:cover">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="content">
+                <h4>{{picture|lookup:"title"}}</h4>
+                <p>Автор: {{picture|lookup:"author"}}</p>
+                <h3 class="has-text-success has-text-weight-bold">{{picture|lookup:"price"}}$</h3>
+                <span class="button is-link modal-button" data-target={{picture|lookup:"id"}}>Детально</span>
+              </div>
+            </div>
+          </div>
+
+
+            <div id={{picture|lookup:"id"}} class="modal modal-fx-superScaled">
+            <div class="modal-background"></div>
+            <div class="modal-content is-large">
+              <!-- content -->
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image modal-button is-4by3" data-target={{ picture|lookup:"extra_id" }}>
+                    <img  src={% static picture|lookup:'address' %} alt="Placeholder image" style="object-fit:cover" >
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4">{{picture|lookup:"title"}}</p>
+                      <p class="subtitle is-6">{{picture|lookup:"author"}}</p>
+                    </div>
+                    <div class="media-right">
+                      <p class="title is-2 has-text-success has-text-weight-bold">{{picture|lookup:"price"}}$</p>
+                    </div>
+                  </div>
+                  <div class="content">
+                    {{picture|lookup:"info"}}
+                    <br><br>
+                    <time>{{picture|lookup:"date"}}</time>
+                    <br><br>
+                    <a class="button is-success" href="user/ordering/{{picture|lookup:'id'}}">Замовити</a>
+                    <a class="button is-link" href="user/comment/{{picture|lookup:'id'}}">Залишити комментар</a>
+                  </div>
+                </div>
+              </div>
+              <!-- end content -->
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+          </div>
+
+        </div>
+
+        <div id={{ picture|lookup:"extra_id" }} class="modal modal-fx-superScaled">
+          <div class="modal-background"></div>
+          <div class="modal-content  is-image">
+            <img src={% static picture|lookup:'address' %} alt="Placeholder image">
+          </div>
+          <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+        
+{% endfor %}
+      </div>
+    </section>
+
+
+
+ 
+{% endblock %}

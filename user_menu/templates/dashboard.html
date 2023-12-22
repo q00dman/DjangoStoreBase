@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Особистий кабінет{% endblock %}
+
+{% block content %}
+    <section class="hero is-success">
+        <div class="hero-body">
+            <p class="title is-2">Особистий кабінет</p>
+            <p class="subtitle is-4">Вітаєму у Вашому особистому кабінеті, {{ request.user.first_name }}.</p>
+
+        </div>
+    </section>
+    <section class="section">
+        <div class="columns multiline">
+            <div class="column is-one-third">
+                <aside class="menu">
+                        <p class="menu-label" style="font-size:16pt">Меню</p>
+                        <ul class="menu-list">
+                            <li><a href={% url 'dashboard' %}>Профіль</a></li>
+                            <li><a href={% url 'index' %}>Зробити замовлення</a></li>
+                            <li><a>Список замовлень</a></li>
+                            <hr>
+                            <li><a href={% url 'logout' %}>Вийти з профілю</a></li>
+                            {% if request.user.is_superuser %}
+                            <hr>
+                            <li><a href={% url 'add_goods' %}>Додати товар</a></li>
+                            <li><a href="../admin/">Адміністративна панель</a></li>
+                            {% endif %}
+                        </ul>
+                </aside>
+            </div>
+
+            <div class="column is-1">
+            </div>
+
+
+            <div class="column">
+                {% block dashboard_content %}{% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
